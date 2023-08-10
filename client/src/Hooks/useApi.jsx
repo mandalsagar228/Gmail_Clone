@@ -7,7 +7,6 @@ const useAPi = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const call = async () => {
-    setResponse(null);
     setError("");
     setIsLoading(true);
 
