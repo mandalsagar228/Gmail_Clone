@@ -1,8 +1,8 @@
 import express from "express";
 import Connection from "./Database/db.js";
 import dotenv from "dotenv";
+import router from "./Routes/Route.js";
 
-// import Routes from "./Route/routes.js";
 import cors from "cors";
 import bodyParser from "body-parser";
 
@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use("/", Routes);
+app.use("/", router);
 
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;

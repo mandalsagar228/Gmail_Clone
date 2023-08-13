@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import useAPi from "../Hooks/useApi";
+import { Api_URLS } from "../Services/Api.urls";
 import {
   Dialog,
   Box,
@@ -60,14 +62,12 @@ const Footer = styled(Box)`
   padding: 10px 15px;
 `;
 
-const mailData = {
-  to: "",
-  subject: "",
-  msg: "",
-};
 const ComposeMail = ({ openDialog, setOpenDialog }) => {
-  const [data, setData] = useState(mailData);
-  // Function for closing the compose modal  after clickin on X button:
+  const [data, setData] = useState({});
+
+  // Initialising the custom hooks that send client side data to the server
+  const sentEmailService = useAPi(Api_URLS.saveSentEmail);
+  // Function for closing the compose modal  after clicking on X button:
   const onCloseCompose = (e) => {
     e.preventDefault();
     setOpenDialog(false);
@@ -76,6 +76,22 @@ const ComposeMail = ({ openDialog, setOpenDialog }) => {
   // Sending mail to the server
   const SendMail = async (e) => {
     e.preventDefault();
+    const payload = {
+      to: data.to,
+      subject: data.subject,
+      body: data.msgBody,
+      date: new Date(),
+      image: "",
+      name: "Sagar Mandal",
+      starred: "false",
+      type: "sent",
+    };
+    // Sending mail data(payload) to the call function  in useApi hooks
+    await sentEmailService.call(payload);
+    if (!sentEmailService.call) {
+      setOpenDialog(false);
+      setData({});
+    }
 
     setOpenDialog(false);
   };
@@ -113,7 +129,7 @@ const ComposeMail = ({ openDialog, setOpenDialog }) => {
               border: "none",
             },
           }}
-          name="msg"
+          name="msgBody"
           onChange={(e) => onValueChange(e)}
         />
         <Footer>
