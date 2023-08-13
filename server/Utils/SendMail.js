@@ -15,9 +15,9 @@ export const sendEmailToUser = (emailData) => {
     from: "mandalsagar228@gmail.com",
     to: emailData.to,
     subject: emailData.subject,
-    text: emailData.msgBody,
+    text: "This is text",
 
-    // html: `<h1>Hello,</h1><p>This is an <strong>HTML</strong> email sent using Nodemailer. Your OTP is here:${OTP} </p>`,
+    html: `<h1>${emailData.body} </h1>`,
   };
 
   Transporter.sendMail(mailOptions, (error, info) => {
