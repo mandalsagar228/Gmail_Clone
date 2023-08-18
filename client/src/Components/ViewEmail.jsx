@@ -1,7 +1,7 @@
 import React from "react";
 import { useOutletContext } from "react-router-dom";
 
-const Emails = () => {
+const ViewEmail = () => {
   const { openDrawer } = useOutletContext();
   return (
     <div
@@ -9,9 +9,9 @@ const Emails = () => {
         openDrawer ? { marginLeft: "250px", width: "100%" } : { width: "100%" }
       }
     >
-      email
+      View Email
     </div>
   );
 };
 
-export default Emails;
+export default ViewEmail;
