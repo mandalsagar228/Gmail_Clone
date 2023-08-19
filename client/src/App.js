@@ -28,7 +28,7 @@ const router = createBrowserRouter(
         <Route
           path={routes.view.path}
           element={<routes.view.element />}
-          errorElement={<errorElement />}
+          errorElement={<ErrorComponent />}
         />
       </Route>
 

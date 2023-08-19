@@ -20,7 +20,7 @@ export const SideBar_Data = [
   },
   {
     name: "sent",
-    title: "sent",
+    title: "Sent",
     icon: SendOutlined,
   },
   {

@@ -3,11 +3,11 @@ import { sendEmailToUser } from "../Utils/SendMail.js";
 
 export const saveSentEmail = async (req, res) => {
   try {
-    console.log("from controller:", req.body.payload);
-    const validateEmail = await new Email(req.body.payload);
+    console.log("from controller:", req.body);
+    const validateEmail = await new Email(req.body);
 
     // function for sending mail to the user.
-    sendEmailToUser(req.body.payload);
+    sendEmailToUser(req.body);
     await validateEmail.save();
     return res.status(201).json({ msg: "saved successfully" });
   } catch (error) {
