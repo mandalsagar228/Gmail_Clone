@@ -61,12 +61,14 @@ const Footer = styled(Box)`
   justify-content: space-between;
   padding: 10px 15px;
 `;
-
+// This function will compose email field where you write you receiver's email address, subject and msg and finally after clicking on SEND  button ,email will be sent
 const ComposeMail = ({ openDialog, setOpenDialog }) => {
   const [data, setData] = useState({});
 
   // Initialising the custom hooks that send client side data to the server
-  const sentEmailService = useAPi(Api_URLS.saveSentEmail);
+  const sentEmailService = useAPi();
+  console.log(typeof sentEmailService);
+
   // Function for closing the compose modal  after clicking on X button:
   const onCloseCompose = (e) => {
     e.preventDefault();
@@ -87,7 +89,7 @@ const ComposeMail = ({ openDialog, setOpenDialog }) => {
       type: "sent",
     };
     // Sending mail data(payload) to the call function  in useApi hooks
-    await sentEmailService.call(payload);
+    await sentEmailService.call(payload, Api_URLS.saveSentEmail);
     if (!sentEmailService.call) {
       setOpenDialog(false);
       setData({});

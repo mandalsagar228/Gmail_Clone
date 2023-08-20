@@ -3,4 +3,8 @@ export const Api_URLS = {
     endPoint: "save",
     method: "POST",
   },
+  getEmailByType: {
+    endPoint: "emails",
+    method: "GET",
+  },
 };
