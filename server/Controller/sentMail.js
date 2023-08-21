@@ -24,13 +24,33 @@ export const saveSentEmail = async (req, res) => {
 export const getEmails = async (req, res) => {
   try {
     let emails;
+
     if (false) {
+      //   emails = await Email.find({ bin: true });
+      // } else if ((req.params.type = "allmail")) {
+      //   emails = await Email.find({});
     } else {
       emails = await Email.find({ type: req.params.type });
     }
-    return res.status(200).json(emails);
+    return res.status(200).json({ msg: "This is mail", emails });
   } catch (error) {
     console.log(error);
-    return res.status(500).json("internal server error", error);
+    return res.status(500).json({ msg: "msg:internal server error", error });
+  }
+};
+
+// Controller for deleting all mail i.e moving to bin
+
+export const moveEmailToBin = async (req, res) => {
+  try {
+    const updatedMails = await Email.updateMany(
+      { _id: { $in: req.body } },
+      { $set: { bin: true, starred: false, type: "" } }
+    );
+    return res
+      .status(200)
+      .json({ mas: "email deleted successfully", updatedMails });
+  } catch (error) {
+    return res.status(500).json({ msg: "internal server error", error });
   }
 };

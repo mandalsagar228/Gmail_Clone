@@ -38,7 +38,7 @@ const Container = styled(Box)`
 const SideBarContent = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const { type } = useParams();
-  console.log(type);
+
   const onComposeClick = () => {
     setOpenDialog(true);
   };

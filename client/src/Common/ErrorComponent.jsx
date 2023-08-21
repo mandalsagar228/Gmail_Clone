@@ -11,7 +11,7 @@ const ErrorPage = styled(Typography)`
 
 const ErrorComponent = () => {
   const error = useRouteError();
-  console.log(error);
+  // console.log(error);
   return (
     <Box>
       <ErrorPage>Error while loading this page.</ErrorPage>

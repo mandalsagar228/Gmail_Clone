@@ -4,17 +4,18 @@ import API from "../Services/api";
 // custom hooks
 const useAPi = () => {
   const [response, setResponse] = useState(null);
+
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const call = async (payload, urlObject, type = "") => {
-    setResponse(null);
     setError("");
     setIsLoading(true);
 
     try {
       let res = await API(payload, urlObject, type);
-      setResponse(res.data);
+      setResponse((prevData) => res.data);
+      // console.log("API Response:", res.data);
     } catch (error) {
       setError(error.message);
     } finally {

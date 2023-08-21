@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAPi from "../Hooks/useApi";
 import { Api_URLS } from "../Services/Api.urls";
 import {
@@ -67,12 +67,12 @@ const ComposeMail = ({ openDialog, setOpenDialog }) => {
 
   // Initialising the custom hooks that send client side data to the server
   const sentEmailService = useAPi();
-  console.log(typeof sentEmailService);
+
   // For sending DRAFTS mails
   const saveDraftMail = useAPi();
 
   // Function for closing the compose modal  after clicking on X button:
-  const onCloseCompose = (e) => {
+  const onCloseCompose = async (e) => {
     e.preventDefault();
     setOpenDialog(false);
 
@@ -86,7 +86,7 @@ const ComposeMail = ({ openDialog, setOpenDialog }) => {
       starred: "false",
       type: "drafts",
     };
-    saveDraftMail.call(payload, Api_URLS.saveDraftEmail);
+    await saveDraftMail.call(payload, Api_URLS.saveDraftEmail);
   };
 
   // Sending mail to the server
@@ -102,6 +102,7 @@ const ComposeMail = ({ openDialog, setOpenDialog }) => {
       starred: "false",
       type: "sent",
     };
+
     // Sending mail data(payload) to the call function  in useApi hooks
     await sentEmailService.call(payload, Api_URLS.saveSentEmail);
     if (!sentEmailService.call) {
@@ -113,11 +114,13 @@ const ComposeMail = ({ openDialog, setOpenDialog }) => {
   };
 
   // Getting  input data from input field
+
   const onValueChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+    setData((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
     console.log({ ...data, [e.target.name]: e.target.value });
     console.log(data);
   };
+
   return (
     <>
       <Dialog open={openDialog} PaperProps={{ sx: dialogStyle }}>

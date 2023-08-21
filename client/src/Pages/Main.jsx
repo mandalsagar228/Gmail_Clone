@@ -15,7 +15,7 @@ const Main = () => {
     <>
       <Header toggleDrawer={toggleDrawer} />
       <SideBar openDrawer={openDrawer} />
-      <Suspense fallback={SuspenseLoader}>
+      <Suspense fallback={<SuspenseLoader />}>
         <Outlet context={{ openDrawer }} />
       </Suspense>
     </>

@@ -18,30 +18,50 @@ const Wrapper = styled(Box)`
 
   & > div {
     display: flex;
-    width: calc(100%-250px);
-    justify-content: space-between;
+    width: 100%;
+    & > p {
+      font-size: 14px;
+    }
   }
 `;
+const Indicator = styled(Typography)`
+  font-size: 12px !important;
+  background: #ddd;
+  padding: 0 4px;
+  border-radius: 4px;
+  margin-right: 6px;
+`;
 
-const Email = ({ email }) => {
+const Date = styled(Typography)`
+  margin-right: 20px;
+  margin-left: auto;
+  font-size: 12px;
+  color: #5f6368;
+`;
+
+const Email = ({ email, selectedEmails }) => {
+  console.log("This  data is from mail", selectedEmails);
   return (
     <Wrapper>
-      <Checkbox size="small" />
-      <Star fontSize="small" style={{ marginRight: "10px" }} />
-      <StarBorder />
+      <Checkbox size="small" checked={selectedEmails?.includes(email._id)} />
+      <Star fontSize="small" style={{ marginRight: "5px" }} />
+      <StarBorder fontSize="small" style={{ marginRight: "10px" }} />
       <Box>
-        <Typography>{email.name}</Typography>
+        <Typography style={{ width: "200px", overflow: "hidden" }}>
+          {email.name}
+        </Typography>
+        <Indicator>{email.type}</Indicator>
         <Typography>
           {email.subject}
-          {email.body && "-"}
+          {email.body && " - "}
           {email.body}
         </Typography>
-        <Typography>
+        <Date>
           {new window.Date(email.date).getDate()}
           {new window.Date(email.date).toLocaleDateString("default", {
             month: "long",
           })}
-        </Typography>
+        </Date>
       </Box>
     </Wrapper>
   );
