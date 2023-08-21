@@ -7,4 +7,8 @@ export const Api_URLS = {
     endPoint: "emails",
     method: "GET",
   },
+  saveDraftEmail: {
+    endPoint: "drafts",
+    method: "POST",
+  },
 };

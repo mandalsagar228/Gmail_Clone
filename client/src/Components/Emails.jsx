@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import { Api_URLS } from "../Services/Api.urls";
 import useAPi from "../Hooks/useApi";
+import Email from "./Email";
+import { Box, Checkbox, List } from "@mui/material";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 const Emails = () => {
   const { type } = useParams();
@@ -13,13 +16,29 @@ const Emails = () => {
     getEmailService.call({}, Api_URLS.getEmailByType, type);
   }, [type]);
   return (
-    <div
+    <Box
       style={
         openDrawer ? { marginLeft: "250px", width: "100%" } : { width: "100%" }
       }
     >
-      List of emails will be here.
-    </div>
+      <Box
+        style={{
+          padding: "20px 10px 0 10px",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <Checkbox size="small" />
+        <DeleteOutlineIcon />
+      </Box>
+      <Box>
+        <List>
+          {getEmailService?.response?.map((email) => (
+            <Email key={email._id} email={email} />
+          ))}
+        </List>
+      </Box>
+    </Box>
   );
 };
 

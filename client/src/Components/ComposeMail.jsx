@@ -68,11 +68,25 @@ const ComposeMail = ({ openDialog, setOpenDialog }) => {
   // Initialising the custom hooks that send client side data to the server
   const sentEmailService = useAPi();
   console.log(typeof sentEmailService);
+  // For sending DRAFTS mails
+  const saveDraftMail = useAPi();
 
   // Function for closing the compose modal  after clicking on X button:
   const onCloseCompose = (e) => {
     e.preventDefault();
     setOpenDialog(false);
+
+    const payload = {
+      to: data.to,
+      subject: data.subject,
+      body: data.msgBody,
+      date: new Date(),
+      image: "",
+      name: "Sagar Mandal",
+      starred: "false",
+      type: "drafts",
+    };
+    saveDraftMail.call(payload, Api_URLS.saveDraftEmail);
   };
 
   // Sending mail to the server
