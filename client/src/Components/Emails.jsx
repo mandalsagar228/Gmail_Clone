@@ -5,12 +5,24 @@ import useAPi from "../Hooks/useApi";
 import Email from "./Email";
 import { Box, Checkbox, List } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import debounce from "lodash.debounce";
+import styled from "@emotion/styled";
+
+const CheckBox = styled(Checkbox)`
+  :hover {
+    background: #757373;
+  }
+`;
+const DeleteIcon = styled(DeleteOutlineIcon)`
+  :hover {
+    background: #757373;
+    cursor: pointer;
+    border-radius: 100%;
+  }
+`;
 
 const Emails = () => {
   const [selectedEmails, setSelectedEmails] = useState([]);
   const [resfreshScreen, setRefreshScreen] = useState(false);
-  // console.log(" selectedEmails", selectedEmails);
 
   const { type } = useParams();
 
@@ -18,28 +30,14 @@ const Emails = () => {
   const moveEmailToBinService = useAPi();
   const { openDrawer } = useOutletContext();
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     await getEmailService.call({}, Api_URLS.getEmailByType, type);
-  //     console.log("this is response inside", getEmailService.response);
-  //   };
-
-  //   fetchData();
-  // }, [type]);
-
-  // Define a debounced version of the fetchData function
-  const debouncedFetchData = debounce(async () => {
-    await getEmailService.call({}, Api_URLS.getEmailByType, type);
-  }, 6000); // Adjust the debounce delay as needed
-
   useEffect(() => {
-    // Call the debouncedFetchData function when type changes
-    debouncedFetchData();
-  }, [type]);
+    const fetchData = async () => {
+      await getEmailService.call({}, Api_URLS.getEmailByType, type);
+      console.log("this is response inside", getEmailService.response);
+    };
 
-  // useEffect(() => {
-  //   console.log("from useeffect", getEmailService.response);
-  // }, [getEmailService.response]);
+    fetchData();
+  }, [type, resfreshScreen]);
 
   // Checking whether  the checkbox is checked or not[if checked,send the data to email.jsx componenet as a prop ]
   const selectAllEmails = (e) => {
@@ -47,9 +45,9 @@ const Emails = () => {
       const emails = getEmailService?.response?.map((email) => email._id); // Mapping the RESPONSE that is come from the getEmailService.response of useApi hooks
 
       console.log("This is response", getEmailService.response);
-      setSelectedEmails(emails); //[if checked,send the data to email.jsx componenet as a prop ]
+      setSelectedEmails(emails); //[if checked,send the data to email.jsx componenet as a prop to check in chekbox ]
     } else {
-      setSelectedEmails([]);
+      setSelectedEmails([]); //to deselect the  checked email
     }
   };
 
@@ -76,24 +74,14 @@ const Emails = () => {
           alignItems: "center",
         }}
       >
-        <Checkbox size="small" onChange={(e) => selectAllEmails(e)} />
-        <DeleteOutlineIcon onClick={(e) => deleteSelectedEmails(e)} />
+        <CheckBox size="small" onChange={(e) => selectAllEmails(e)} />
+        <DeleteIcon onClick={(e) => deleteSelectedEmails(e)} />
       </Box>
       <Box>
-        {/* <List>
-          {console.log("before mapping", getEmailService.response)}
-          {getEmailService.response?.map((email) => (
-            <Email
-              key={email._id}
-              email={email}
-              selectedEmails={selectedEmails}
-            />
-          ))}
-        </List> */}
         <List>
           {console.log("before mapping", getEmailService.response)}
           {Array.isArray(getEmailService.response) &&
-            getEmailService.response?.map((email) => (
+            getEmailService?.response?.map((email) => (
               <Email
                 key={email._id}
                 email={email}

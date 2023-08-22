@@ -25,17 +25,17 @@ export const getEmails = async (req, res) => {
   try {
     let emails;
 
-    if (false) {
-      //   emails = await Email.find({ bin: true });
-      // } else if ((req.params.type = "allmail")) {
-      //   emails = await Email.find({});
+    if (req.params.type === "bin") {
+      emails = await Email.find({ bin: true });
+    } else if ((req.params.type = "allmail")) {
+      emails = await Email.find({});
     } else {
       emails = await Email.find({ type: req.params.type });
     }
-    return res.status(200).json({ msg: "This is mail", emails });
+    return res.status(200).json(emails);
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ msg: "msg:internal server error", error });
+    return res.status(500).json({ msg: "internal server error", error });
   }
 };
 
@@ -47,9 +47,7 @@ export const moveEmailToBin = async (req, res) => {
       { _id: { $in: req.body } },
       { $set: { bin: true, starred: false, type: "" } }
     );
-    return res
-      .status(200)
-      .json({ mas: "email deleted successfully", updatedMails });
+    return res.status(200).json(updatedMails);
   } catch (error) {
     return res.status(500).json({ msg: "internal server error", error });
   }
