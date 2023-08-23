@@ -2,6 +2,8 @@ import styled from "@emotion/styled";
 import { Star, StarBorder } from "@mui/icons-material";
 import { Box, Checkbox, Typography } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { routes } from "../Routes/Route";
 
 const Wrapper = styled(Box)`
   padding: 0 0 0 15px;
@@ -40,13 +42,16 @@ const Date = styled(Typography)`
 `;
 
 const Email = ({ email, selectedEmails }) => {
+  const navigate = useNavigate();
   console.log("This  data is from mail", selectedEmails);
   return (
     <Wrapper>
       <Checkbox size="small" checked={selectedEmails?.includes(email._id)} />
       <Star fontSize="small" style={{ marginRight: "5px" }} />
       <StarBorder fontSize="small" style={{ marginRight: "10px" }} />
-      <Box>
+      <Box
+        onClick={() => navigate(routes.view.path, { state: { email: email } })}
+      >
         <Typography style={{ width: "200px", overflow: "hidden" }}>
           {email.name}
         </Typography>
