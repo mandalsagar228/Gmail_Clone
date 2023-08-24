@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkclient=self.webpackChunkclient||[]).push([[917],{1917:function(n,e,t){t.r(e);var i,l=t(168),c=(t(2791),t(7689)),r=t(890),s=t(4554),h=t(225),u=t(184),a=(0,h.Z)(r.Z)(i||(i=(0,l.Z)(["\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 100vh;\n"])));e.default=function(){(0,c.lk)();return(0,u.jsx)(s.Z,{children:(0,u.jsx)(a,{children:"Error while loading this page."})})}}}]);
+//# sourceMappingURL=917.f3418ff9.chunk.js.map
