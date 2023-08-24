@@ -9,7 +9,7 @@ import path from "path";
 const __dirname = path.resolve();
 
 dotenv.config();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8600;
 const app = express();
 app.use(cors());
 
