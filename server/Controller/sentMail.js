@@ -31,6 +31,8 @@ export const getEmails = async (req, res) => {
       emails = await Email.find({});
     } else if (req.params.type === "starred") {
       emails = await Email.find({ starred: true, bin: false });
+    } else if (request.params.type === "inbox") {
+      emails = [];
     } else {
       emails = await Email.find({ type: req.params.type });
     }
