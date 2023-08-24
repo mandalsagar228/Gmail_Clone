@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Star, StarBorder } from "@mui/icons-material";
 import { Box, Checkbox, Typography } from "@mui/material";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { routes } from "../Routes/Route";
 import useAPi from "../Hooks/useApi";
 import { Api_URLS } from "../Services/Api.urls";
@@ -43,8 +43,14 @@ const Date = styled(Typography)`
   color: #5f6368;
 `;
 
-const Email = ({ email, selectedEmails, setRefreshScreen }) => {
+const Email = ({
+  email,
+  selectedEmails,
+  setRefreshScreen,
+  setSelectedEmails,
+}) => {
   const navigate = useNavigate();
+  const { type } = useParams();
   console.log("This  data is from mail", selectedEmails);
   const toggleEmailStarredService = useAPi(); //initialise useApi hook
 
@@ -57,14 +63,24 @@ const Email = ({ email, selectedEmails, setRefreshScreen }) => {
     setRefreshScreen((prevState) => !prevState);
   };
 
-  console.log("starred:", email.starred);
-  console.log("bin:", email.type);
+  const onValueChange = () => {
+    if (selectedEmails.includes(email._id)) {
+      setSelectedEmails((prevState) =>
+        prevState.filter((id) => id !== email._id)
+      );
+    } else {
+      setSelectedEmails((prevState) => [...prevState, email._id]);
+    }
+  };
+
   return (
     <Wrapper>
-      <Checkbox size="small" checked={selectedEmails?.includes(email._id)} />
-      {email.type === "bin" ? (
-        " "
-      ) : email.starred ? (
+      <Checkbox
+        size="small"
+        checked={selectedEmails?.includes(email._id)}
+        onChange={() => onValueChange()}
+      />
+      {type === "bin" ? null : email.starred ? (
         <Star
           fontSize="small"
           style={{ marginRight: "5px", color: "#c69605" }}

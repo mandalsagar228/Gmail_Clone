@@ -67,3 +67,13 @@ export const toggleStarredEmail = async (req, res) => {
     return res.status(500).json({ msg: "internal server error", error });
   }
 };
+
+export const deleteEmail = async (req, res) => {
+  try {
+    const deletem = await Email.deleteMany({ _id: { $in: req.body } });
+    console.log(deletem);
+    return res.status(200).json("deleted successfully");
+  } catch (error) {
+    return res.status(500).json({ msg: "internal server error", error });
+  }
+};

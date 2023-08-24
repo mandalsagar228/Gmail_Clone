@@ -30,12 +30,12 @@ const Emails = () => {
 
   const getEmailService = useAPi();
   const moveEmailToBinService = useAPi();
+  const deleteEmailService = useAPi();
   const { openDrawer } = useOutletContext();
 
   useEffect(() => {
     const fetchData = async () => {
       await getEmailService.call({}, Api_URLS.getEmailByType, type);
-      console.log("this is response inside", getEmailService.response);
     };
 
     fetchData();
@@ -56,9 +56,19 @@ const Emails = () => {
   // Function for deleting selected emails [all checkbox]
   const deleteSelectedEmails = (e) => {
     if (type === "bin") {
+      deleteEmailService.call(selectedEmails, Api_URLS.deleteEmail);
+      setRefreshScreen((prevState) => !prevState);
+      console.log(
+        "refresh:",
+        setRefreshScreen((prevState) => !prevState)
+      );
     } else {
       moveEmailToBinService.call(selectedEmails, Api_URLS.moveEmailToBin);
       setRefreshScreen((prevState) => !prevState);
+      console.log(
+        "refresh:",
+        setRefreshScreen((prevState) => !prevState)
+      );
     }
   };
   return (
@@ -81,16 +91,19 @@ const Emails = () => {
       </Box>
       <Box>
         <List>
-          {console.log("before mapping", getEmailService.response)}
           {Array.isArray(getEmailService.response) &&
-            getEmailService?.response?.map((email) => (
-              <Email
-                key={email._id}
-                email={email}
-                selectedEmails={selectedEmails}
-                setRefreshScreen={setRefreshScreen}
-              />
-            ))}
+            getEmailService?.response
+              .slice()
+              ?.reverse()
+              .map((email) => (
+                <Email
+                  key={email._id}
+                  email={email}
+                  selectedEmails={selectedEmails}
+                  setRefreshScreen={setRefreshScreen}
+                  setSelectedEmails={setSelectedEmails}
+                />
+              ))}
         </List>
         {getEmailService?.response?.length === 0 && (
           <Nomail message={EMPTY_TABS[type]} />
