@@ -36,7 +36,7 @@ const Container = styled(Box)`
 `;
 // This function will render the CONTENT of SIDEBAR like compose button, inbox, starred,bin,sent etc
 const SideBarContent = () => {
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openDialog, setOpenDialog] = useState(true);
   const { type } = useParams();
 
   const onComposeClick = () => {
