@@ -15,7 +15,6 @@ export const sendEmailToUser = (emailData) => {
     from: "mandalsagar228@gmail.com",
     to: emailData.to,
     subject: emailData.subject,
-    text: "This is text",
 
     html: `<h1>${emailData.body} </h1>`,
   };

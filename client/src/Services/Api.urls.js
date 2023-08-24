@@ -15,4 +15,8 @@ export const Api_URLS = {
     endPoint: "bin",
     method: "POST",
   },
+  toggleStarredEmail: {
+    endPoint: "starred",
+    method: "POST",
+  },
 };

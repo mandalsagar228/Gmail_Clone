@@ -11,8 +11,8 @@ export const saveSentEmail = async (req, res) => {
     if (req.body.type === "sent") {
       sendEmailToUser(req.body);
     }
-    await validateEmail.save();
-    return res.status(201).json({ msg: "saved successfully" });
+    const sentemail = await validateEmail.save();
+    return res.status(201).json({ msg: "saved successfully", data: sentemail });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "internal server error.", error });
@@ -29,6 +29,8 @@ export const getEmails = async (req, res) => {
       emails = await Email.find({ bin: true });
     } else if (req.params.type === "allmail") {
       emails = await Email.find({});
+    } else if (req.params.type === "starred") {
+      emails = await Email.find({ starred: true, bin: false });
     } else {
       emails = await Email.find({ type: req.params.type });
     }
@@ -48,6 +50,19 @@ export const moveEmailToBin = async (req, res) => {
       { $set: { bin: true, starred: false, type: "" } }
     );
     return res.status(200).json(updatedMails);
+  } catch (error) {
+    return res.status(500).json({ msg: "internal server error", error });
+  }
+};
+
+export const toggleStarredEmail = async (req, res) => {
+  try {
+    const updated = await Email.updateOne(
+      { _id: req.body.id },
+      { $set: { starred: req.body.value } }
+    );
+    console.log(updated);
+    return res.status(200).json("email marked as starred.");
   } catch (error) {
     return res.status(500).json({ msg: "internal server error", error });
   }

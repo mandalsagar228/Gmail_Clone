@@ -4,6 +4,8 @@ import { Box, Checkbox, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { routes } from "../Routes/Route";
+import useAPi from "../Hooks/useApi";
+import { Api_URLS } from "../Services/Api.urls";
 
 const Wrapper = styled(Box)`
   padding: 0 0 0 15px;
@@ -41,14 +43,41 @@ const Date = styled(Typography)`
   color: #5f6368;
 `;
 
-const Email = ({ email, selectedEmails }) => {
+const Email = ({ email, selectedEmails, setRefreshScreen }) => {
   const navigate = useNavigate();
   console.log("This  data is from mail", selectedEmails);
+  const toggleEmailStarredService = useAPi(); //initialise useApi hook
+
+  const toggleStarredEmails = () => {
+    toggleEmailStarredService.call(
+      { id: email._id, value: !email.starred },
+      Api_URLS.toggleStarredEmail
+    );
+    console.log("toggle:", !email.starred);
+    setRefreshScreen((prevState) => !prevState);
+  };
+
+  console.log("starred:", email.starred);
+  console.log("bin:", email.type);
   return (
     <Wrapper>
       <Checkbox size="small" checked={selectedEmails?.includes(email._id)} />
-      <Star fontSize="small" style={{ marginRight: "5px" }} />
-      <StarBorder fontSize="small" style={{ marginRight: "10px" }} />
+      {email.type === "bin" ? (
+        " "
+      ) : email.starred ? (
+        <Star
+          fontSize="small"
+          style={{ marginRight: "5px", color: "#c69605" }}
+          onClick={() => toggleStarredEmails()}
+        />
+      ) : (
+        <StarBorder
+          fontSize="small"
+          style={{ marginRight: "10px" }}
+          onClick={() => toggleStarredEmails()}
+        />
+      )}
+
       <Box
         onClick={() => navigate(routes.view.path, { state: { email: email } })}
       >

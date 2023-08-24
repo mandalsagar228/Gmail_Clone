@@ -6,6 +6,8 @@ import Email from "./Email";
 import { Box, Checkbox, List } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import styled from "@emotion/styled";
+import Nomail from "../Common/Nomail";
+import { EMPTY_TABS } from "../Constant/Constant";
 
 const CheckBox = styled(Checkbox)`
   :hover {
@@ -86,9 +88,13 @@ const Emails = () => {
                 key={email._id}
                 email={email}
                 selectedEmails={selectedEmails}
+                setRefreshScreen={setRefreshScreen}
               />
             ))}
         </List>
+        {getEmailService?.response?.length === 0 && (
+          <Nomail message={EMPTY_TABS[type]} />
+        )}
       </Box>
     </Box>
   );

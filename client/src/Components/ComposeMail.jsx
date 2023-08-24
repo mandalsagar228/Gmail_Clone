@@ -98,10 +98,11 @@ const ComposeMail = ({ openDialog, setOpenDialog }) => {
       body: data.msgBody,
       date: new Date(),
       image: "",
-      name: "Sagar Mandal",
+      name: data.to.split("@")[0],
       starred: "false",
       type: "sent",
     };
+    console.log("username:", data.to.split("@"));
 
     // Sending mail data(payload) to the call function  in useApi hooks
     await sentEmailService.call(payload, Api_URLS.saveSentEmail);
