@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 import SuspenseLoader from "../Common/SuspenseLoader";
 
 const Main = () => {
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(true);
 
   const toggleDrawer = () => {
     setOpenDrawer((prevState) => !prevState);
