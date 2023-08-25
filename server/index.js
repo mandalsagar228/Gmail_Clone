@@ -18,15 +18,15 @@ app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", router);
 
-// app.use(express.static(path.join(__dirname, "./client/build")));
-// app.get("*", function (_, res) {
-//   res.sendFile(
-//     path.join(__dirname, "./client/build/index.html"),
-//     function (error) {
-//       res.status(500).send(error);
-//     }
-//   );
-// });
+app.use(express.static(path.join(__dirname, "./client/build")));
+app.get("*", function (_, res) {
+  res.sendFile(
+    path.join(__dirname, "./client/build/index.html"),
+    function (error) {
+      res.status(500).send(error);
+    }
+  );
+});
 
 const USERNAME = process.env.DB_USERNAME;
 const PASSWORD = process.env.DB_PASSWORD;
