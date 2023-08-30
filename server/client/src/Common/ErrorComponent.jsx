@@ -14,7 +14,7 @@ const ErrorComponent = () => {
   // console.log(error);
   return (
     <Box>
-      <ErrorPage>Error while loading this page.</ErrorPage>
+      <ErrorPage>Error while loading this page.{error}</ErrorPage>
     </Box>
   );
 };
