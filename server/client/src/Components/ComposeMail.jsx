@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import useAPi from "../Hooks/useApi";
 import { Api_URLS } from "../Services/Api.urls";
 import {
